@@ -1,0 +1,187 @@
+
+<html>
+<body>
+<UL class=side-menu style="OVERFLOW: hidden; BOTTOM: 28px">
+
+<LI class=spotli><A class=spota><SPAN class="fa  fa-institution"></SPAN></A></LI>
+<LI class=spotli><A class=spota><SPAN class="fa  fa-institution" class="accordion"><IMG style="BORDER-TOP: 0px; HEIGHT: 18px; BORDER-RIGHT: 0px; WIDTH: 19px; BORDER-BOTTOM: 0px; BORDER-LEFT: 0px" src="1b83a0135f194fbe9a789100f3637b7f.png"></SPAN><STRONG>ERA Date</STRONG></A></LI>
+<div class="panel" style="height: auto; width: auto;">
+<LI class=spotli><A class=spota><SPAN class="fa fa-flask"></SPAN><SPAN style="COLOR: black"><SpotfireControl id="378ccd3299364347ae550b4a2b6c60a8" /></SPAN></A>
+
+</LI>
+</div>
+<LI class=spotli><A class=spota><SPAN class="fa  fa-institution"></SPAN></A></LI>
+
+
+<LI class=spotli><A class=spota><SPAN class="fa  fa-institution"  class="accordion"><IMG style="BORDER-TOP: 0px; HEIGHT: 18px; BORDER-RIGHT: 0px; WIDTH: 19px; BORDER-BOTTOM: 0px; BORDER-LEFT: 0px" src="5d5a428d91064d23996397fe3fe2f413.png" ></SPAN><STRONG>HB Action</STRONG></A></LI>
+<div class="panel" style="height: auto; width: auto;">
+<LI class="spotli"><A class=spota><SPAN class="fa fa-flask"  ></SPAN><SPAN style="COLOR: black" ><SpotfireControl id="18b0c37b07134a6b923c41112fb37ce6" /></SPAN></A></LI>
+
+<LI class=spotli><A class=spota><SPAN class="fa  fa-institution"></SPAN></A></LI>
+
+<LI class=spotli><A class=spota><SPAN class="fa  fa-institution"></SPAN></A></LI>
+<LI class=spotli><A class=spota><SPAN class="fa  fa-institution"></SPAN></A></LI>
+<LI class=spotli><A class=spota><SPAN class="fa  fa-institution"></SPAN></A></LI>
+
+</div>
+<LI class=spotli><A class=spota><SPAN class="fa  fa-institution"></SPAN></A></LI>
+
+<LI class=spotli><A class=spota><SPAN class="fa  fa-institution" class="accordion"><IMG style="BORDER-TOP: 0px; HEIGHT: 18px; BORDER-RIGHT: 0px; WIDTH: 19px; BORDER-BOTTOM: 0px; BORDER-LEFT: 0px" src="fd5af611e7bc428198fac2c86c315269.png"></SPAN><STRONG>Payer Name</STRONG></A></LI>
+<div class="panel" style="height: auto; width: auto;">
+<LI class=spotli><A class=spota><SPAN class="fa fa-flask"></SPAN><SPAN style="COLOR: black"><SpotfireControl id="d7b5f67c5e734407b8cd3c8eac47c21c" /></SPAN></A></LI>
+<LI class=spotli><A class=spota><SPAN class="fa  fa-institution"></SPAN></A></LI>
+<LI class=spotli><A class=spota><SPAN class="fa  fa-institution"></SPAN></A></LI>
+<LI class=spotli><A class=spota><SPAN class="fa  fa-institution"></SPAN></A></LI>
+</div>
+<LI class=spotli><A class=spota><SPAN class="fa  fa-institution"></SPAN></A></LI>
+
+</B>
+
+</UL>
+
+<script>
+
+/*set layout of side-menu on mouseover*/
+$(".side-menu").mouseover(function() {
+	
+  $(this).css("width","288px")
+  $(this).css("border-color", "#aaaaaa")
+  $(this).css("overflow-x", "hidden") 
+  $(this).css("overflow-y", "visible")
+  
+});
+
+/*set layout of side-menu on mouseout*/
+$(".side-menu").mouseout(function() {
+	
+  $(this).css("width","60px")
+  
+});
+
+$(".spota").mouseover(function() {
+	
+	$(this).css("background","#FFFFFF")
+	
+});
+
+$(".spota").mouseout(function() {
+	
+  $(this).css("background","Trasparent")
+  
+});
+
+$(".sel").css({
+
+  "display": "'none",
+
+  "background": "#aaaaaa"
+
+})
+
+$(".side-menu").css({
+
+  "font-family": "'Roboto', sans-serif",
+
+  "position": "fixed",
+
+  "top": "32px",
+
+  "left": "0",
+
+  "margin": "0",
+
+  "padding": "0",
+
+  "bottom":"26px",
+
+  "width": "60px",
+
+  "list-style-type": "none",
+
+  "background": "#FFFFFF",
+
+  "overflow": "hidden",
+
+  "z-index":"99999",
+
+  "transition": "width .5s"
+
+});
+
+$(".fa").css({
+
+  "font-size": "1rem",
+
+  "margin": "20px 40px 0 20px"
+
+});
+
+$(".spota").css({
+
+  "display": "block",
+
+  "font-size": ".9rem",
+
+  "text-decoration": "none",
+
+  "color": "#6B8E23",
+
+  "height": "27px"
+
+});
+
+$(".panel").css({
+
+  "padding": "block",
+
+  "display": "none",
+
+  "background-color": "white"
+});
+
+/*accordion on mouseover*/
+$(".side-menu").mouseover(function() {
+	
+	for(i = 0; i < $(".panel").length; i++) {
+		
+if($(".panel").css("display") == "none")
+{
+
+	$(".panel").css("display","block") 
+}
+else
+{
+	$(".panel").css("display","none") 
+}
+	}
+});
+
+/*accordion on mouseout*/
+$(".side-menu").mouseout(function() {
+
+	for(i = 0; i < $(".panel").length; i++) { 
+
+	$(".panel").css("display","none") 
+  }
+});
+
+$(".accordion").css({ 
+	
+  "padding": "block",
+
+  "cursor": "pointer",
+
+  "background-color": "white",
+
+  "transition": "0.4s"
+});
+
+$(".spotli").css({
+	
+  "width": "300px"
+});
+
+</script>
+
+</body>
+</html>

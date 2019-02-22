@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<style>
+#world {
+		position: relative;
+		display: block;
+		width: 920px;
+		height: 680px;
+		margin-left: auto;
+		margin-right: auto;
+		background-color: #000;
+	}
+	.pacman {
+		position: absolute;
+		width: auto;
+		height: auto;
+		display: inline-block;
+		top: 10px;
+		left: 10px;
+		z-index: 100;
+	}
+	.pacmanbody {
+		top:0px;
+		left:0px;
+		position: relative;
+		display: block;
+	  width: 0px;
+	  height: 0px;
+	  border-right: 30px solid transparent;
+	  border-top: 30px solid yellow;
+	  border-left: 30px solid yellow;
+	  border-bottom: 30px solid yellow;
+	  border-radius: 100%;
+	  -moz-border-radius: 100%;
+		-wenkit-border-radius: 100%;
+	}
+	.pacmaneye {
+		position: absolute;
+		top: -18px;
+		left: 0px;
+		width : 7px;
+		height: 7px;
+		border-radius: 100%;
+		-moz-border-radius: 100%;
+		-wenkit-border-radius: 100%;
+		background-color: #ff7700;
+	}
+	.pacmanmouth {
+		position: absolute;
+		top: -30px;
+		width: 0px;
+	  	height: 0px;
+		border : 0;
+		border-radius: 100%;
+		-moz-border-radius: 100%;
+		-wenkit-border-radius: 100%;
+	}
+
+	.heart {
+		display: inline-block;
+		position: absolute;
+		width: 30px;
+		height: 30px;
+	}
+	.heart .right, .heart .left {
+		display: inline-block;
+		position: absolute;
+		width: 15px;
+		height: 28px;
+		top: 0;
+		left: 15px;
+		border-top-left-radius: 15px;
+		border-top-right-radius: 15px;
+		-moz-border-top-left-radius: 15px;
+		-moz-border-top-right-radius: 15px;
+		-webkit-border-top-left-radius: 15px;
+		-webkit-border-top-right-radius: 15px;
+		background-color: #f00;
+	}
+	.heart .right {
+		transform: rotate(45deg);
+		transform-origin: 30% 40%;
+
+		-moz-transform: rotate(45deg);
+		-moz-transform-origin: 30% 40%;
+
+		-webkit-transform: rotate(45deg);
+		-webkit-transform-origin: 30% 40%;
+	}
+	.heart .left {
+		left: 0px;
+		transform: rotate(-45deg);
+		transform-origin: 70% 40%;
+		-moz-transform: rotate(-45deg);
+		-moz-transform-origin: 70% 40%;
+		-webkit-transform: rotate(-45deg);
+		-wenkit-transform-origin: 70% 40%;
+	}
+
+	time {
+		display: inline-block;
+		position: absolute;
+		width: auto;
+		height : auto;
+		left: 360px;
+		top: 240px;
+		font-size: 42px;
+		font-weight: bolder;
+		color: #ff0000;
+	}
+
+	.three-d-msg {
+		display: inline-block;
+		position: absolute;
+		width: 324px;
+		height : 60px;
+		margin: 0;
+		padding: 0;
+		left: 290px;
+		top: 300px;
+		z-index: 99;
+		font-size: 38px;
+		font-weight: bolder;
+		color: #ff1088;
+	  	-webkit-transform-origin: 50% 50% 50%;
+	  	-moz-transform-origin: 50% 50% 50%;
+	  	transform-origin: 50% 50% 50%;
+		-webkit-transform-style: preserve-3d;
+		-moz-transform-style: preserve-3d;
+	  	transform-style: preserve-3d;
+	  	-webkit-transition: transform 3s;
+	  	-moz-transition: transform 3s;
+		transition: transform 3s;
+	}
+	.three-d-msg part {
+		display: inline;
+		position: absolute;
+	}
+
+	.three-d-msg .a {transform: translateZ(0.0mm); -webkit-transform: translateZ(0.0mm); -moz-transform: translateZ(0.0mm);}
+	.three-d-msg .b {transform: translateZ(0.1mm); -webkit-transform: translateZ(0.1mm); -moz-transform: translateZ(0.1mm);}
+	.three-d-msg .c {transform: translateZ(0.2mm); -webkit-transform: translateZ(0.2mm); -moz-transform: translateZ(0.2mm);}
+	.three-d-msg .d {transform: translateZ(0.3mm); -webkit-transform: translateZ(0.3mm); -moz-transform: translateZ(0.3mm);}
+	.three-d-msg .e {transform: translateZ(0.4mm); -webkit-transform: translateZ(0.4mm); -moz-transform: translateZ(0.4mm);}
+	.three-d-msg .f {transform: translateZ(0.5mm); -webkit-transform: translateZ(0.5mm); -moz-transform: translateZ(0.5mm);}
+	.three-d-msg .g {transform: translateZ(0.6mm); -webkit-transform: translateZ(0.6mm); -moz-transform: translateZ(0.6mm);}
+	.three-d-msg .h {transform: translateZ(0.7mm); -webkit-transform: translateZ(0.7mm); -moz-transform: translateZ(0.7mm);}
+	.three-d-msg .i {transform: translateZ(0.8mm); -webkit-transform: translateZ(0.8mm); -moz-transform: translateZ(0.8mm);}
+	.three-d-msg .j {transform: translateZ(0.9mm); -webkit-transform: translateZ(0.9mm); -moz-transform: translateZ(0.9mm);}
+	.three-d-msg .k {transform: translateZ(1.0mm); -webkit-transform: translateZ(1.0mm); -moz-transform: translateZ(1.0mm);}
+	.three-d-msg .l {transform: translateZ(1.1mm); -webkit-transform: translateZ(1.1mm); -moz-transform: translateZ(1.1mm);}
+	.three-d-msg .m {transform: translateZ(1.2mm); -webkit-transform: translateZ(1.2mm); -moz-transform: translateZ(1.2mm);}
+	.three-d-msg .n {transform: translateZ(1.3mm); -webkit-transform: translateZ(1.3mm); -moz-transform: translateZ(1.3mm);}
+	.three-d-msg .o {transform: translateZ(1.4mm); -webkit-transform: translateZ(1.4mm); -moz-transform: translateZ(1.4mm);}
+	.three-d-msg .p {transform: translateZ(1.5mm); -webkit-transform: translateZ(1.5mm); -moz-transform: translateZ(1.5mm);}
+	.three-d-msg .q {transform: translateZ(1.6mm); -webkit-transform: translateZ(1.6mm); -moz-transform: translateZ(1.6mm);}
+	.three-d-msg .r {transform: translateZ(1.7mm); -webkit-transform: translateZ(1.7mm); -moz-transform: translateZ(1.7mm);}
+	.three-d-msg .s {transform: translateZ(1.8mm); -webkit-transform: translateZ(1.8mm); -moz-transform: translateZ(1.8mm);}
+	.three-d-msg .t {transform: translateZ(1.9mm); -webkit-transform: translateZ(1.9mm); -moz-transform: translateZ(1.9mm);}
+	.three-d-msg .u {transform: translateZ(2.0mm); transform: translateZ(2.0mm); transform: translateZ(2.0mm);}
+	.three-d-msg .v {transform: translateZ(2.1mm); transform: translateZ(2.1mm); transform: translateZ(2.1mm);}
+	.three-d-msg .w {transform: translateZ(2.2mm); transform: translateZ(2.2mm); transform: translateZ(2.2mm);}
+	.three-d-msg .x {transform: translateZ(2.3mm); transform: translateZ(2.3mm); transform: translateZ(2.3mm);}
+	.three-d-msg .y {transform: translateZ(2.4mm); transform: translateZ(2.4mm); transform: translateZ(2.4mm);}
+	.three-d-msg .z {transform: translateZ(2.5mm); transform: translateZ(2.5mm); transform: translateZ(2.5mm);}
+	.three-d-msg .aa {transform: translateZ(2.6mm); transform: translateZ(2.6mm); transform: translateZ(2.6mm);}
+	.three-d-msg .ab {transform: translateZ(2.7mm); transform: translateZ(2.7mm); transform: translateZ(2.7mm);}
+	.three-d-msg .ac {transform: translateZ(2.8mm); transform: translateZ(2.8mm); transform: translateZ(2.8mm);}
+	.three-d-msg .ad {transform: translateZ(2.9mm); transform: translateZ(2.9mm); transform: translateZ(2.9mm);}
+	.three-d-msg .ae {transform: translateZ(3.0mm); transform: translateZ(3.0mm); transform: translateZ(3.0mm);}
+	.three-d-msg .af {transform: translateZ(3.1mm); transform: translateZ(3.1mm); transform: translateZ(3.1mm);}
+	.three-d-msg .ag {transform: translateZ(3.2mm); transform: translateZ(3.2mm); transform: translateZ(3.2mm);}
+	.three-d-msg .ah {transform: translateZ(3.3mm); transform: translateZ(3.3mm); transform: translateZ(3.3mm);}
+	.three-d-msg .ai {transform: translateZ(3.4mm); transform: translateZ(3.4mm); transform: translateZ(3.4mm);}
+	.three-d-msg .aj {transform: translateZ(3.5mm); transform: translateZ(3.5mm); transform: translateZ(3.5mm);}
+	.three-d-msg .ak {transform: translateZ(3.6mm); transform: translateZ(3.6mm); transform: translateZ(3.6mm);}
+	.three-d-msg .al {transform: translateZ(3.7mm); transform: translateZ(3.7mm); transform: translateZ(3.7mm);}
+	.three-d-msg .am {transform: translateZ(3.8mm); transform: translateZ(3.8mm); transform: translateZ(3.8mm);}
+
+	word-blue {color: #1a1aff; text-shadow: 0px 0px 1px #101088;}
+	word-red {color: #ff1010; text-shadow: 0px 0px 1px #990e0e; font-size: 45px;}
+	word-dp {color: #9910ff; text-shadow: 0px 0px 1px #9910ff;}
+
+	name {
+		position: absolute;
+		display: inline-block;
+		color: #fee;
+		text-shadow: 2px 0 14px #f00, -2px 0 14px #f00, 0 2px 14px #f00, 0 -2px 14px #f00;
+		font-size: 40px;
+	}
+
+	name.me {
+		top: 180px;
+		left: 220px;
+	}
+	name.mylove {
+		top: 180px;
+		left: 575px;
+	}
+</style>
+  
+
+</head>
+
+<body>
+<div id="world">
+		<div class="pacman">
+			<span class="pacmanbody"><span class="pacmanmouth"></span><span class="pacmaneye"></span></span>
+		</div>
+		<div class="pacman">
+			<span class="pacmanbody"><span class="pacmanmouth"></span><span class="pacmaneye"></span></span>
+		</div>
+		<div class="pacman">
+			<span class="pacmanbody"><span class="pacmanmouth"></span><span class="pacmaneye"></span></span>
+		</div>
+		<div class="pacman">
+			<span class="pacmanbody"><span class="pacmanmouth"></span><span class="pacmaneye"></span></span>
+		</div>
+
+		<time>7 years</time>
+
+		<div class="three-d-msg" id="msg">
+			<part class="a">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="b">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="c">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="d">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="e">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="f">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="g">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="h">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="i">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="j">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="k">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="l">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="m">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="n">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="o">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="p">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="q">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="r">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="s">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="t">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="u">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="v">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="w">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="x">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="y">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="z">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="aa">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="ab">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="ac">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="ad">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="ae">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="af">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="ag">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="ah">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="ai">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="aj">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+			<part class="ak">
+				<word-blue>H</word-blue>a<word-dp>p</word-dp>p<word-dp>y</word-dp>  a<word-dp>n</word-dp>n<word-dp>i</word-dp>v<word-dp>e</word-dp>r<word-dp>s</word-dp>a<word-dp>r</word-dp><word-blue>y</word-blue>
+			</part>
+
+		</div>
+
+		<name class="me"> shiya </name>
+		<name class="mylove"> jami </name>
+	</div>
+
+<script>
+function node(x, y, nlink) {
+			this.x = x;
+			this.y = y;
+			this.nlink = nlink;
+		}
+
+		var node_23 = new node(360, 120, null);
+		var node_22 = new node(300, 60, node_23);
+		var node_21 = new node(240, 60, node_22);
+		var node_20 = new node(180, 60, node_21);
+		var node_19 = new node(120, 120, node_20);
+		var node_18 = new node(120, 180, node_19);
+		var node_17 = new node(120, 240, node_18);
+		var node_16 = new node(180, 300, node_17);
+		var node_15 = new node(240, 360, node_16);
+		var node_14 = new node(300, 420, node_15);
+		var node_13 = new node(360, 480, node_14);
+		var node_12 = new node(420, 540, node_13);
+		var node_11 = new node(480, 480, node_12);
+		var node_10 = new node(540, 420, node_11);
+		var node_9 = new node(600, 360, node_10);
+		var node_8 = new node(660, 300, node_9);
+		var node_7 = new node(720, 240, node_8);
+		var node_6 = new node(720, 180, node_7);
+		var node_5 = new node(720, 120, node_6);
+		var node_4 = new node(660, 60, node_5);
+		var node_3 = new node(600, 60, node_4);
+		var node_2 = new node(540, 60, node_3);
+		var node_1 = new node(480, 120, node_2);
+		var node_0 = new node(420, 180, node_1);
+		node_23.nlink = node_0;
+
+		var world = document.getElementById("world");
+		var pacmenBodies = document.getElementsByClassName("pacmanbody");
+		var pacmanObjs = document.getElementsByClassName("pacman");
+		var directionX = 1;
+		var directionY = 1;
+		var directionChangeX;
+		var directionChangeY;
+		var animFlag = 0;
+		var animFlagControl = 1;
+
+		var heart = document.createElement("span");
+		var heartRight = document.createElement("span");
+		var heartLeft = document.createElement("span");
+		heart.setAttribute("class", "heart");
+		heartRight.setAttribute("class", "right");
+		heartLeft.setAttribute("class", "left");
+		heart.appendChild(heartRight);
+		heart.appendChild(heartLeft);
+
+		var msg = document.getElementById("msg");
+		msg.deg = 360;
+
+		var tmp_node = node_0;
+		for(var i=0; i<24; i++) {
+			var _tmp_heart = heart.cloneNode(true);
+			_tmp_heart.style.left = tmp_node.x+15+"px";
+			_tmp_heart.style.top = tmp_node.y+15+"px";
+
+			world.appendChild(_tmp_heart);
+
+			tmp_node = tmp_node.nlink;
+		}
+
+		for(var j=0; j<4; j++) {
+			pacmenBodies[j].animFlag = 0;
+			pacmenBodies[j].animFlagControl = 1;
+		}
+
+		pacmanObjs[0].current_node = node_0;
+		pacmanObjs[0].pacmanPositionLeft = pacmanObjs[0].current_node.x;
+		pacmanObjs[0].pacmanPositionTop = pacmanObjs[0].current_node.y;
+		pacmanObjs[0].style.left = pacmanObjs[0].pacmanPositionLeft +"px";
+		pacmanObjs[0].style.top = pacmanObjs[0].pacmanPositionTop +"px";
+		pacmanObjs[0].directionX = 1;
+		pacmanObjs[0].directionY = 1;
+
+		pacmanObjs[1].current_node = node_6;
+		pacmanObjs[1].pacmanPositionLeft = pacmanObjs[1].current_node.x;
+		pacmanObjs[1].pacmanPositionTop = pacmanObjs[1].current_node.y;
+		pacmanObjs[1].style.left = pacmanObjs[1].pacmanPositionLeft +"px";
+		pacmanObjs[1].style.top = pacmanObjs[1].pacmanPositionTop +"px";
+		pacmanObjs[1].directionX = 1;
+		pacmanObjs[1].directionY = 1;
+
+		pacmanObjs[2].current_node = node_11;
+		pacmanObjs[2].pacmanPositionLeft = pacmanObjs[2].current_node.x;
+		pacmanObjs[2].pacmanPositionTop = pacmanObjs[2].current_node.y;
+		pacmanObjs[2].style.left = pacmanObjs[2].pacmanPositionLeft +"px";
+		pacmanObjs[2].style.top = pacmanObjs[2].pacmanPositionTop +"px";
+		pacmanObjs[2].directionX = 1;
+		pacmanObjs[2].directionY = 1;
+
+		pacmanObjs[3].current_node = node_17;
+		pacmanObjs[3].pacmanPositionLeft = pacmanObjs[3].current_node.x;
+		pacmanObjs[3].pacmanPositionTop = pacmanObjs[3].current_node.y;
+		pacmanObjs[3].style.left = pacmanObjs[3].pacmanPositionLeft +"px";
+		pacmanObjs[3].style.top = pacmanObjs[3].pacmanPositionTop +"px";
+		pacmanObjs[3].directionX = 1;
+		pacmanObjs[3].directionY = 1;
+
+		setInterval(renderAnimation, 180);
+		setInterval(renderRunning, 17);
+		setInterval(rotateText, 2999);
+
+		function renderAnimation() {
+			pacmanAnimation(pacmenBodies[0]);
+			pacmanAnimation(pacmenBodies[1]);
+			pacmanAnimation(pacmenBodies[2]);
+			pacmanAnimation(pacmenBodies[3]);
+		}
+
+		function renderRunning() {
+			runPacman(pacmanObjs[0]);
+			runPacman(pacmanObjs[1]);
+			runPacman(pacmanObjs[2]);
+			runPacman(pacmanObjs[3]);
+		}
+
+		function pacmanAnimation(_pacmanBody) {
+			if(_pacmanBody.animFlag == 0) {
+				_pacmanBody.style.borderRight = "30px solid #000";
+				_pacmanBody.firstChild.style.top = "-30px";
+				_pacmanBody.firstChild.style.border = "0";
+				_pacmanBody.firstChild.style.marginRight = "4px";
+				
+			} else if(_pacmanBody.animFlag == 1) {
+				_pacmanBody.style.borderRight = "30px solid yellow";
+				_pacmanBody.firstChild.style.top = "-15px";
+				_pacmanBody.firstChild.style.borderRight = "34px solid #000";
+				_pacmanBody.firstChild.style.borderTop = "15px solid yellow";
+				_pacmanBody.firstChild.style.borderBottom = "15px solid yellow";
+				_pacmanBody.firstChild.style.borderLeft = "0";
+				_pacmanBody.firstChild.style.marginRight = "0px";
+				
+			} else if(_pacmanBody.animFlag == 2) {
+				_pacmanBody.style.borderRight = "30px solid yellow";
+				_pacmanBody.firstChild.style.top = "-2px";
+				_pacmanBody.firstChild.style.borderRight = "30px solid #000";
+				_pacmanBody.firstChild.style.borderTop = "2px solid yellow";
+				_pacmanBody.firstChild.style.borderBottom = "2px solid yellow";
+				_pacmanBody.firstChild.style.borderLeft = "0";
+				_pacmanBody.firstChild.style.marginRight = "4px";
+			}
+
+			_pacmanBody.animFlag = _pacmanBody.animFlag + _pacmanBody.animFlagControl;
+
+			if(_pacmanBody.animFlag == 2) {
+				_pacmanBody.animFlagControl = -1;
+			} else if(_pacmanBody.animFlag == 0) {
+				_pacmanBody.animFlagControl = 1;
+			}
+		}
+
+		function runPacman(pacman) {
+			var current_node = pacman.current_node;
+			var target_node = current_node.nlink;
+			if(target_node.x == current_node.x) {
+				directionChangeX = false;
+			} else {
+				directionChangeX = true;
+				if(target_node.x > current_node.x) {
+					pacman.directionX = 1;
+				} else {
+					pacman.directionX = -1;
+				}
+				pacman.pacmanPositionLeft = pacman.pacmanPositionLeft + pacman.directionX;
+			}
+
+			if(target_node.y == current_node.y) {
+				directionChangeY = false;
+			} else {
+				directionChangeY = true;
+				if(target_node.y > current_node.y) {
+					pacman.directionY = 1;
+				} else {
+					pacman.directionY = -1;
+				}
+				pacman.pacmanPositionTop = pacman.pacmanPositionTop + pacman.directionY;
+			}
+
+			turnCharacterFace(pacman);
+			
+			if(target_node.x == pacman.pacmanPositionLeft && target_node.y == pacman.pacmanPositionTop) {
+				pacman.current_node = target_node;
+			}
+
+			pacman.style.left = pacman.pacmanPositionLeft+"px";
+			pacman.style.top = pacman.pacmanPositionTop+"px";
+
+		}
+
+		function turnCharacterFace(pacman) {
+			if(pacman.directionX == -1) {
+				if(pacman.directionY == -1) {
+					pacman.style.transform = 'rotateY('+180+'deg) rotateZ('+-45+'deg)';
+				} else {
+					pacman.style.transform = 'rotateY('+180+'deg) rotateZ('+45+'deg)';
+				}
+				
+			} else {
+				if(pacman.directionY == -1) {
+					pacman.style.transform = 'rotateY('+0+'deg) rotateZ('+-45+'deg)';
+				} else {
+					pacman.style.transform = 'rotateY('+0+'deg) rotateZ('+45+'deg)';
+				}
+			}
+
+			if(directionChangeY) {
+				if(!directionChangeX) {
+					if(pacman.directionY == -1) {
+						pacman.style.transform = 'rotateZ('+-90+'deg)';
+					} else {
+						pacman.style.transform = 'rotateZ('+90+'deg)';
+					}	
+				}
+			} else {
+				if(pacman.directionX == 1) {
+					pacman.style.transform = 'rotate('+0+'deg)';
+				} else {
+					pacman.style.transform = 'rotateY('+180+'deg)';
+				}
+			}
+		}
+
+		function rotateText() {
+			if(msg.deg == 360) {
+				msg.style.transform = "rotateY("+180+"deg)";
+				msg.deg = 180;
+			} else {
+				msg.style.transform = "rotateY("+360+"deg)";
+				msg.deg = 360;
+			}
+		}
+</script>
+
+</body>
+
+</html>
